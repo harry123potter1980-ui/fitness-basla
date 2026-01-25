@@ -1,0 +1,23 @@
+{
+  "name": "VoltFit",
+  "short_name": "VoltFit",
+  "description": "Fitness ve Kalori Takip Uygulaması",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#BFFF00",
+  "icons": [
+    {
+      "src": "/app-icon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/app-icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
