@@ -14,7 +14,120 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      meals: {
+        Row: {
+          calories: number
+          carbs: number
+          created_at: string
+          fat: number
+          id: string
+          meal_date: string
+          meal_type: string
+          name: string
+          protein: number
+          user_id: string
+        }
+        Insert: {
+          calories: number
+          carbs?: number
+          created_at?: string
+          fat?: number
+          id?: string
+          meal_date?: string
+          meal_type: string
+          name: string
+          protein?: number
+          user_id: string
+        }
+        Update: {
+          calories?: number
+          carbs?: number
+          created_at?: string
+          fat?: number
+          id?: string
+          meal_date?: string
+          meal_type?: string
+          name?: string
+          protein?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          daily_calorie_goal: number | null
+          display_name: string | null
+          height: number | null
+          id: string
+          target_weight: number | null
+          updated_at: string
+          user_id: string
+          weekly_workout_goal: number | null
+          weight: number | null
+        }
+        Insert: {
+          created_at?: string
+          daily_calorie_goal?: number | null
+          display_name?: string | null
+          height?: number | null
+          id?: string
+          target_weight?: number | null
+          updated_at?: string
+          user_id: string
+          weekly_workout_goal?: number | null
+          weight?: number | null
+        }
+        Update: {
+          created_at?: string
+          daily_calorie_goal?: number | null
+          display_name?: string | null
+          height?: number | null
+          id?: string
+          target_weight?: number | null
+          updated_at?: string
+          user_id?: string
+          weekly_workout_goal?: number | null
+          weight?: number | null
+        }
+        Relationships: []
+      }
+      workouts: {
+        Row: {
+          calories: number
+          completed: boolean
+          created_at: string
+          duration: number
+          id: string
+          name: string
+          type: string
+          user_id: string
+          workout_date: string
+        }
+        Insert: {
+          calories: number
+          completed?: boolean
+          created_at?: string
+          duration: number
+          id?: string
+          name: string
+          type: string
+          user_id: string
+          workout_date?: string
+        }
+        Update: {
+          calories?: number
+          completed?: boolean
+          created_at?: string
+          duration?: number
+          id?: string
+          name?: string
+          type?: string
+          user_id?: string
+          workout_date?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
