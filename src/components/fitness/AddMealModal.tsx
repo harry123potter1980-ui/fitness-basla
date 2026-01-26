@@ -10,18 +10,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { MealInsert } from "@/types/fitness";
 
 interface AddMealModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onAdd: (meal: {
-    name: string;
-    calories: number;
-    protein: number;
-    carbs: number;
-    fat: number;
-    mealType: string;
-  }) => void;
+  onAdd: (meal: MealInsert) => void;
 }
 
 const mealTypes = [
@@ -44,14 +38,16 @@ const AddMealModal = ({ isOpen, onClose, onAdd }: AddMealModalProps) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (name && calories && protein && carbs && fat && mealType) {
+    if (name && calories && mealType) {
+      const today = new Date().toISOString().split('T')[0];
       onAdd({
         name,
         calories: parseInt(calories),
-        protein: parseInt(protein),
-        carbs: parseInt(carbs),
-        fat: parseInt(fat),
-        mealType,
+        protein: parseInt(protein) || 0,
+        carbs: parseInt(carbs) || 0,
+        fat: parseInt(fat) || 0,
+        meal_type: mealType,
+        meal_date: today,
       });
       setName("");
       setCalories("");

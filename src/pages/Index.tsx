@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Flame, Footprints, Timer, Plus, TrendingUp, Zap } from "lucide-react";
+import { Flame, Timer, Plus, TrendingUp, Zap, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Navigation from "@/components/fitness/Navigation";
 import StatCard from "@/components/fitness/StatCard";
@@ -8,60 +8,38 @@ import WorkoutCard from "@/components/fitness/WorkoutCard";
 import MealCard from "@/components/fitness/MealCard";
 import AddWorkoutModal from "@/components/fitness/AddWorkoutModal";
 import AddMealModal from "@/components/fitness/AddMealModal";
-
-interface Workout {
-  id: number;
-  name: string;
-  duration: number;
-  calories: number;
-  type: string;
-  completed: boolean;
-}
-
-interface Meal {
-  id: number;
-  name: string;
-  calories: number;
-  protein: number;
-  carbs: number;
-  fat: number;
-  mealType: string;
-}
+import { useAuth } from "@/hooks/useAuth";
+import { useFitnessData } from "@/hooks/useFitnessData";
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState("home");
   const [showWorkoutModal, setShowWorkoutModal] = useState(false);
   const [showMealModal, setShowMealModal] = useState(false);
   
-  const [workouts, setWorkouts] = useState<Workout[]>([
-    { id: 1, name: "Sabah Kardiyo", duration: 30, calories: 250, type: "Kardiyo", completed: true },
-    { id: 2, name: "Üst Vücut Güç", duration: 45, calories: 320, type: "Güç Antrenmanı", completed: false },
-  ]);
+  const { signOut, user } = useAuth();
+  const {
+    workouts,
+    meals,
+    profile,
+    loading,
+    addWorkout,
+    addMeal,
+    toggleWorkoutComplete,
+    calorieGoal,
+    totalCaloriesConsumed,
+    totalCaloriesBurned,
+    netCalories,
+    calorieProgress,
+    totalWorkoutDuration,
+  } = useFitnessData();
 
-  const [meals, setMeals] = useState<Meal[]>([
-    { id: 1, name: "Yulaf Ezmesi", calories: 350, protein: 12, carbs: 55, fat: 8, mealType: "Kahvaltı" },
-    { id: 2, name: "Tavuklu Salata", calories: 420, protein: 35, carbs: 25, fat: 18, mealType: "Öğle Yemeği" },
-  ]);
-
-  const calorieGoal = 2000;
-  const totalCaloriesConsumed = meals.reduce((sum, meal) => sum + meal.calories, 0);
-  const totalCaloriesBurned = workouts.filter(w => w.completed).reduce((sum, w) => sum + w.calories, 0);
-  const netCalories = totalCaloriesConsumed - totalCaloriesBurned;
-  const calorieProgress = Math.min((totalCaloriesConsumed / calorieGoal) * 100, 100);
-
-  const addWorkout = (workout: Omit<Workout, "id" | "completed">) => {
-    setWorkouts([...workouts, { ...workout, id: Date.now(), completed: false }]);
-  };
-
-  const addMeal = (meal: Omit<Meal, "id">) => {
-    setMeals([...meals, { ...meal, id: Date.now() }]);
-  };
-
-  const toggleWorkoutComplete = (id: number) => {
-    setWorkouts(workouts.map(w => 
-      w.id === id ? { ...w, completed: !w.completed } : w
-    ));
-  };
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   const renderHomeTab = () => (
     <div className="space-y-6 animate-slide-up">
@@ -101,7 +79,7 @@ const Index = () => {
         <StatCard
           icon={<Timer className="w-5 h-5" />}
           title="Antrenman Süresi"
-          value={workouts.filter(w => w.completed).reduce((sum, w) => sum + w.duration, 0)}
+          value={totalWorkoutDuration}
           unit="dk"
         />
       </div>
@@ -120,13 +98,19 @@ const Index = () => {
           </Button>
         </div>
         <div className="space-y-3">
-          {workouts.slice(0, 2).map((workout) => (
-            <WorkoutCard 
-              key={workout.id}
-              {...workout}
-              onClick={() => toggleWorkoutComplete(workout.id)}
-            />
-          ))}
+          {workouts.length === 0 ? (
+            <p className="text-muted-foreground text-sm text-center py-4">
+              Henüz antrenman eklenmedi
+            </p>
+          ) : (
+            workouts.slice(0, 2).map((workout) => (
+              <WorkoutCard 
+                key={workout.id}
+                {...workout}
+                onClick={() => toggleWorkoutComplete(workout.id)}
+              />
+            ))
+          )}
         </div>
       </div>
 
@@ -144,9 +128,15 @@ const Index = () => {
           </Button>
         </div>
         <div className="space-y-3">
-          {meals.slice(0, 2).map((meal) => (
-            <MealCard key={meal.id} {...meal} />
-          ))}
+          {meals.length === 0 ? (
+            <p className="text-muted-foreground text-sm text-center py-4">
+              Henüz öğün eklenmedi
+            </p>
+          ) : (
+            meals.slice(0, 2).map((meal) => (
+              <MealCard key={meal.id} {...meal} mealType={meal.meal_type} />
+            ))
+          )}
         </div>
       </div>
     </div>
@@ -253,7 +243,7 @@ const Index = () => {
           <h3 className="font-semibold text-foreground mb-4">Bugünkü Öğünler</h3>
           <div className="space-y-3 pb-24">
             {meals.map((meal) => (
-              <MealCard key={meal.id} {...meal} />
+              <MealCard key={meal.id} {...meal} mealType={meal.meal_type} />
             ))}
             {meals.length === 0 && (
               <div className="text-center py-12">
@@ -270,9 +260,13 @@ const Index = () => {
     <div className="space-y-6 animate-slide-up pb-24">
       <div className="pt-2 text-center">
         <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-primary/20 flex items-center justify-center glow-volt">
-          <span className="text-3xl font-bold text-primary">K</span>
+          <span className="text-3xl font-bold text-primary">
+            {user?.email?.[0]?.toUpperCase() || "K"}
+          </span>
         </div>
-        <h1 className="text-2xl font-bold text-foreground">Kullanıcı</h1>
+        <h1 className="text-2xl font-bold text-foreground">
+          {profile?.display_name || user?.email?.split("@")[0] || "Kullanıcı"}
+        </h1>
         <p className="text-muted-foreground">Fitness Tutkunusu</p>
       </div>
 
@@ -312,12 +306,12 @@ const Index = () => {
           <div>
             <div className="flex justify-between text-sm mb-2">
               <span className="text-muted-foreground">Haftalık Antrenman</span>
-              <span className="text-foreground font-medium">5 gün</span>
+              <span className="text-foreground font-medium">{profile?.weekly_workout_goal || 5} gün</span>
             </div>
             <div className="h-2 rounded-full bg-secondary overflow-hidden">
               <div 
                 className="h-full rounded-full bg-primary transition-all duration-500"
-                style={{ width: '60%' }}
+                style={{ width: `${Math.min((workouts.length / (profile?.weekly_workout_goal || 5)) * 100, 100)}%` }}
               />
             </div>
           </div>
@@ -330,18 +324,28 @@ const Index = () => {
         <div className="space-y-3">
           <div className="flex justify-between">
             <span className="text-muted-foreground">Boy</span>
-            <span className="text-foreground">175 cm</span>
+            <span className="text-foreground">{profile?.height || "-"} cm</span>
           </div>
           <div className="flex justify-between">
             <span className="text-muted-foreground">Kilo</span>
-            <span className="text-foreground">70 kg</span>
+            <span className="text-foreground">{profile?.weight || "-"} kg</span>
           </div>
           <div className="flex justify-between">
             <span className="text-muted-foreground">Hedef Kilo</span>
-            <span className="text-primary font-medium">68 kg</span>
+            <span className="text-primary font-medium">{profile?.target_weight || "-"} kg</span>
           </div>
         </div>
       </div>
+
+      {/* Logout Button */}
+      <Button 
+        variant="outline" 
+        className="w-full border-destructive text-destructive hover:bg-destructive hover:text-destructive-foreground"
+        onClick={signOut}
+      >
+        <LogOut className="w-4 h-4 mr-2" />
+        Çıkış Yap
+      </Button>
     </div>
   );
 

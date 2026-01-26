@@ -10,16 +10,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { WorkoutInsert } from "@/types/fitness";
 
 interface AddWorkoutModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onAdd: (workout: {
-    name: string;
-    duration: number;
-    calories: number;
-    type: string;
-  }) => void;
+  onAdd: (workout: WorkoutInsert) => void;
 }
 
 const workoutTypes = [
@@ -44,11 +40,14 @@ const AddWorkoutModal = ({ isOpen, onClose, onAdd }: AddWorkoutModalProps) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (name && duration && calories && type) {
+      const today = new Date().toISOString().split('T')[0];
       onAdd({
         name,
         duration: parseInt(duration),
         calories: parseInt(calories),
         type,
+        completed: false,
+        workout_date: today,
       });
       setName("");
       setDuration("");
