@@ -19,11 +19,12 @@ interface AddMealModalProps {
 }
 
 const mealTypes = [
-  "Kahvaltı",
-  "Öğle Yemeği",
-  "Akşam Yemeği",
-  "Ara Öğün",
-  "Atıştırmalık",
+  "Breakfast",
+  "Lunch",
+  "Dinner",
+  "Snack",
+  "Pre-Workout",
+  "Post-Workout",
 ];
 
 const AddMealModal = ({ isOpen, onClose, onAdd }: AddMealModalProps) => {
@@ -71,29 +72,29 @@ const AddMealModal = ({ isOpen, onClose, onAdd }: AddMealModalProps) => {
         </button>
         
         <div className="flex items-center gap-3 mb-6">
-          <div className="p-3 rounded-xl bg-primary text-primary-foreground">
+          <div className="p-3 rounded-xl bg-primary text-primary-foreground glow-volt">
             <Utensils className="w-5 h-5" />
           </div>
-          <h2 className="text-xl font-bold text-foreground">Öğün Ekle</h2>
+          <h2 className="text-xl font-bold text-foreground">Add Meal</h2>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <Label htmlFor="meal-name" className="text-foreground">Yemek Adı</Label>
+            <Label htmlFor="meal-name" className="text-foreground">Meal Name</Label>
             <Input
               id="meal-name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Örn: Tavuklu Salata"
+              placeholder="e.g., Grilled Chicken Salad"
               className="mt-1.5 bg-secondary border-border focus:border-primary"
             />
           </div>
           
           <div>
-            <Label htmlFor="meal-type" className="text-foreground">Öğün Tipi</Label>
+            <Label htmlFor="meal-type" className="text-foreground">Meal Type</Label>
             <Select value={mealType} onValueChange={setMealType}>
               <SelectTrigger className="mt-1.5 bg-secondary border-border">
-                <SelectValue placeholder="Öğün seçin" />
+                <SelectValue placeholder="Select meal type" />
               </SelectTrigger>
               <SelectContent className="bg-card border-border">
                 {mealTypes.map((t) => (
@@ -104,7 +105,7 @@ const AddMealModal = ({ isOpen, onClose, onAdd }: AddMealModalProps) => {
           </div>
 
           <div>
-            <Label htmlFor="meal-calories" className="text-foreground">Kalori (kcal)</Label>
+            <Label htmlFor="meal-calories" className="text-foreground">Calories (kcal)</Label>
             <Input
               id="meal-calories"
               type="number"
@@ -128,7 +129,7 @@ const AddMealModal = ({ isOpen, onClose, onAdd }: AddMealModalProps) => {
               />
             </div>
             <div>
-              <Label htmlFor="carbs" className="text-foreground">Karb (g)</Label>
+              <Label htmlFor="carbs" className="text-foreground">Carbs (g)</Label>
               <Input
                 id="carbs"
                 type="number"
@@ -139,7 +140,7 @@ const AddMealModal = ({ isOpen, onClose, onAdd }: AddMealModalProps) => {
               />
             </div>
             <div>
-              <Label htmlFor="fat" className="text-foreground">Yağ (g)</Label>
+              <Label htmlFor="fat" className="text-foreground">Fat (g)</Label>
               <Input
                 id="fat"
                 type="number"
@@ -155,7 +156,7 @@ const AddMealModal = ({ isOpen, onClose, onAdd }: AddMealModalProps) => {
             type="submit" 
             className="w-full mt-6 bg-primary text-primary-foreground hover:bg-primary/90 glow-volt font-semibold"
           >
-            Öğünü Kaydet
+            Save Meal
           </Button>
         </form>
       </div>

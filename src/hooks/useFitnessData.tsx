@@ -58,8 +58,8 @@ export const useFitnessData = () => {
     } catch (error: any) {
       console.error("Error fetching data:", error);
       toast({
-        title: "Hata",
-        description: "Veriler yüklenirken bir hata oluştu.",
+        title: "Error",
+        description: "Failed to load data.",
         variant: "destructive",
       });
     } finally {
@@ -87,14 +87,14 @@ export const useFitnessData = () => {
       if (error) throw error;
       setWorkouts([data, ...workouts]);
       toast({
-        title: "Başarılı",
-        description: "Antrenman eklendi.",
+        title: "Success",
+        description: "Workout added successfully.",
       });
     } catch (error: any) {
       console.error("Error adding workout:", error);
       toast({
-        title: "Hata",
-        description: "Antrenman eklenirken bir hata oluştu.",
+        title: "Error",
+        description: "Failed to add workout.",
         variant: "destructive",
       });
     }
@@ -116,14 +116,14 @@ export const useFitnessData = () => {
       if (error) throw error;
       setMeals([data, ...meals]);
       toast({
-        title: "Başarılı",
-        description: "Öğün eklendi.",
+        title: "Success",
+        description: "Meal added successfully.",
       });
     } catch (error: any) {
       console.error("Error adding meal:", error);
       toast({
-        title: "Hata",
-        description: "Öğün eklenirken bir hata oluştu.",
+        title: "Error",
+        description: "Failed to add meal.",
         variant: "destructive",
       });
     }
@@ -148,8 +148,8 @@ export const useFitnessData = () => {
     } catch (error: any) {
       console.error("Error toggling workout:", error);
       toast({
-        title: "Hata",
-        description: "Antrenman güncellenirken bir hata oluştu.",
+        title: "Error",
+        description: "Failed to update workout.",
         variant: "destructive",
       });
     }
@@ -165,14 +165,14 @@ export const useFitnessData = () => {
       if (error) throw error;
       setWorkouts(workouts.filter((w) => w.id !== id));
       toast({
-        title: "Başarılı",
-        description: "Antrenman silindi.",
+        title: "Success",
+        description: "Workout deleted.",
       });
     } catch (error: any) {
       console.error("Error deleting workout:", error);
       toast({
-        title: "Hata",
-        description: "Antrenman silinirken bir hata oluştu.",
+        title: "Error",
+        description: "Failed to delete workout.",
         variant: "destructive",
       });
     }
@@ -188,14 +188,14 @@ export const useFitnessData = () => {
       if (error) throw error;
       setMeals(meals.filter((m) => m.id !== id));
       toast({
-        title: "Başarılı",
-        description: "Öğün silindi.",
+        title: "Success",
+        description: "Meal deleted.",
       });
     } catch (error: any) {
       console.error("Error deleting meal:", error);
       toast({
-        title: "Hata",
-        description: "Öğün silinirken bir hata oluştu.",
+        title: "Error",
+        description: "Failed to delete meal.",
         variant: "destructive",
       });
     }
@@ -213,14 +213,14 @@ export const useFitnessData = () => {
       if (error) throw error;
       setProfile({ ...profile, ...updates });
       toast({
-        title: "Başarılı",
-        description: "Profil güncellendi.",
+        title: "Success",
+        description: "Profile updated.",
       });
     } catch (error: any) {
       console.error("Error updating profile:", error);
       toast({
-        title: "Hata",
-        description: "Profil güncellenirken bir hata oluştu.",
+        title: "Error",
+        description: "Failed to update profile.",
         variant: "destructive",
       });
     }
