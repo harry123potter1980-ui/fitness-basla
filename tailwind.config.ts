@@ -84,8 +84,8 @@ export default {
           to: { height: "0" },
         },
         "pulse-glow": {
-          "0%, 100%": { boxShadow: "0 0 20px hsl(68 100% 50% / 0.4)" },
-          "50%": { boxShadow: "0 0 40px hsl(68 100% 50% / 0.6)" },
+          "0%, 100%": { boxShadow: "0 0 20px hsl(120 100% 45% / 0.4)" },
+          "50%": { boxShadow: "0 0 40px hsl(120 100% 45% / 0.6)" },
         },
         "slide-up": {
           from: { opacity: "0", transform: "translateY(10px)" },

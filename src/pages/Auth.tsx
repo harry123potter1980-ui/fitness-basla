@@ -9,8 +9,8 @@ import { z } from "zod";
 import appIcon from "/app-icon.png";
 
 const authSchema = z.object({
-  email: z.string().email("Geçerli bir e-posta adresi girin"),
-  password: z.string().min(6, "Şifre en az 6 karakter olmalıdır"),
+  email: z.string().email("Please enter a valid email address"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
 const Auth = () => {
@@ -61,13 +61,13 @@ const Auth = () => {
         if (error) {
           if (error.message.includes("Invalid login credentials")) {
             toast({
-              title: "Giriş Hatası",
-              description: "E-posta veya şifre hatalı.",
+              title: "Login Error",
+              description: "Invalid email or password.",
               variant: "destructive",
             });
           } else {
             toast({
-              title: "Hata",
+              title: "Error",
               description: error.message,
               variant: "destructive",
             });
@@ -78,21 +78,21 @@ const Auth = () => {
         if (error) {
           if (error.message.includes("already registered")) {
             toast({
-              title: "Kayıt Hatası",
-              description: "Bu e-posta adresi zaten kayıtlı.",
+              title: "Registration Error",
+              description: "This email is already registered.",
               variant: "destructive",
             });
           } else {
             toast({
-              title: "Hata",
+              title: "Error",
               description: error.message,
               variant: "destructive",
             });
           }
         } else {
           toast({
-            title: "Hoş Geldiniz!",
-            description: "Hesabınız oluşturuldu.",
+            title: "Welcome!",
+            description: "Your account has been created.",
           });
         }
       }
@@ -109,7 +109,7 @@ const Auth = () => {
           <img 
             src={appIcon} 
             alt="VoltFit Logo" 
-            className="w-20 h-20 object-contain drop-shadow-[0_0_20px_rgba(191,255,0,0.4)]"
+            className="w-20 h-20 object-contain drop-shadow-[0_0_20px_rgba(0,230,0,0.4)]"
           />
           <h1 className="text-2xl font-bold text-primary">VoltFit</h1>
         </div>
@@ -117,16 +117,16 @@ const Auth = () => {
         {/* Form */}
         <div className="p-6 rounded-2xl bg-card border border-border">
           <h2 className="text-xl font-semibold text-foreground text-center mb-6">
-            {isLogin ? "Giriş Yap" : "Kayıt Ol"}
+            {isLogin ? "Sign In" : "Sign Up"}
           </h2>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">E-posta</Label>
+              <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
                 type="email"
-                placeholder="ornek@email.com"
+                placeholder="example@email.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="bg-secondary border-border"
@@ -137,7 +137,7 @@ const Auth = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password">Şifre</Label>
+              <Label htmlFor="password">Password</Label>
               <Input
                 id="password"
                 type="password"
@@ -156,7 +156,7 @@ const Auth = () => {
               disabled={loading}
               className="w-full bg-primary text-primary-foreground hover:bg-primary/90 glow-volt"
             >
-              {loading ? "Yükleniyor..." : isLogin ? "Giriş Yap" : "Kayıt Ol"}
+              {loading ? "Loading..." : isLogin ? "Sign In" : "Sign Up"}
             </Button>
           </form>
 
@@ -170,8 +170,8 @@ const Auth = () => {
               className="text-sm text-muted-foreground hover:text-primary transition-colors"
             >
               {isLogin
-                ? "Hesabınız yok mu? Kayıt olun"
-                : "Zaten hesabınız var mı? Giriş yapın"}
+                ? "Don't have an account? Sign up"
+                : "Already have an account? Sign in"}
             </button>
           </div>
         </div>

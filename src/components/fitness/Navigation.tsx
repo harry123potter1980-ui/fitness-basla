@@ -7,10 +7,10 @@ interface NavigationProps {
 
 const Navigation = ({ activeTab, onTabChange }: NavigationProps) => {
   const tabs = [
-    { id: "home", icon: Home, label: "Ana Sayfa" },
-    { id: "workout", icon: Dumbbell, label: "Antrenman" },
-    { id: "nutrition", icon: Utensils, label: "Beslenme" },
-    { id: "profile", icon: User, label: "Profil" },
+    { id: "home", icon: Home, label: "Home" },
+    { id: "workout", icon: Dumbbell, label: "Workout" },
+    { id: "nutrition", icon: Utensils, label: "Nutrition" },
+    { id: "profile", icon: User, label: "Profile" },
   ];
 
   return (

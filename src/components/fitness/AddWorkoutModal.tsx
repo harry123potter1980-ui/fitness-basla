@@ -19,14 +19,14 @@ interface AddWorkoutModalProps {
 }
 
 const workoutTypes = [
-  "Güç Antrenmanı",
-  "Kardiyo",
+  "Strength Training",
+  "Cardio",
   "HIIT",
   "Yoga",
   "Pilates",
-  "Yüzme",
-  "Koşu",
-  "Bisiklet",
+  "Swimming",
+  "Running",
+  "Cycling",
 ];
 
 const AddWorkoutModal = ({ isOpen, onClose, onAdd }: AddWorkoutModalProps) => {
@@ -69,29 +69,29 @@ const AddWorkoutModal = ({ isOpen, onClose, onAdd }: AddWorkoutModalProps) => {
         </button>
         
         <div className="flex items-center gap-3 mb-6">
-          <div className="p-3 rounded-xl bg-primary text-primary-foreground">
+          <div className="p-3 rounded-xl bg-primary text-primary-foreground glow-volt">
             <Dumbbell className="w-5 h-5" />
           </div>
-          <h2 className="text-xl font-bold text-foreground">Antrenman Ekle</h2>
+          <h2 className="text-xl font-bold text-foreground">Add Workout</h2>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <Label htmlFor="name" className="text-foreground">Antrenman Adı</Label>
+            <Label htmlFor="name" className="text-foreground">Workout Name</Label>
             <Input
               id="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Örn: Göğüs ve Triceps"
+              placeholder="e.g., Chest & Triceps"
               className="mt-1.5 bg-secondary border-border focus:border-primary"
             />
           </div>
           
           <div>
-            <Label htmlFor="type" className="text-foreground">Antrenman Tipi</Label>
+            <Label htmlFor="type" className="text-foreground">Workout Type</Label>
             <Select value={type} onValueChange={setType}>
               <SelectTrigger className="mt-1.5 bg-secondary border-border">
-                <SelectValue placeholder="Tip seçin" />
+                <SelectValue placeholder="Select type" />
               </SelectTrigger>
               <SelectContent className="bg-card border-border">
                 {workoutTypes.map((t) => (
@@ -103,7 +103,7 @@ const AddWorkoutModal = ({ isOpen, onClose, onAdd }: AddWorkoutModalProps) => {
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="duration" className="text-foreground">Süre (dk)</Label>
+              <Label htmlFor="duration" className="text-foreground">Duration (min)</Label>
               <Input
                 id="duration"
                 type="number"
@@ -114,7 +114,7 @@ const AddWorkoutModal = ({ isOpen, onClose, onAdd }: AddWorkoutModalProps) => {
               />
             </div>
             <div>
-              <Label htmlFor="calories" className="text-foreground">Kalori (kcal)</Label>
+              <Label htmlFor="calories" className="text-foreground">Calories (kcal)</Label>
               <Input
                 id="calories"
                 type="number"
@@ -130,7 +130,7 @@ const AddWorkoutModal = ({ isOpen, onClose, onAdd }: AddWorkoutModalProps) => {
             type="submit" 
             className="w-full mt-6 bg-primary text-primary-foreground hover:bg-primary/90 glow-volt font-semibold"
           >
-            Antrenmanı Kaydet
+            Save Workout
           </Button>
         </form>
       </div>
