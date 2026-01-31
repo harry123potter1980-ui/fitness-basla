@@ -398,11 +398,6 @@ const Index = () => {
         {activeTab === "profile" && renderProfileTab()}
       </div>
 
-      {/* AdMob Banner */}
-      <div className="fixed bottom-16 left-0 right-0 z-30">
-        <AdBanner />
-      </div>
-
       <Navigation activeTab={activeTab} onTabChange={setActiveTab} />
 
       <AddWorkoutModal 
